@@ -11,7 +11,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const Layout = this.getLayout()
+    const Layout = this.getLayout();
+
+    const naturalhr = true;
 
     return (
       <Layout/>

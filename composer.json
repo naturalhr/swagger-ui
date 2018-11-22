@@ -36,5 +36,7 @@
       "name": "Sahar Jafari",
       "email": "shr.jafari@gmail.com"
     }
-  ]
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

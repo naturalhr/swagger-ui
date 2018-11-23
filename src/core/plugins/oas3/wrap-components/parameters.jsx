@@ -15,6 +15,7 @@ class Parameters extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      filtersVisible: false,
       callbackVisible: false,
       parametersVisible: true
     };
@@ -69,15 +70,52 @@ class Parameters extends Component {
     if (tab === "parameters") {
       return this.setState({
         parametersVisible: true,
-        callbackVisible: false
+        callbackVisible: false,
+        filtersVisible: false
+      });
+    } else if (tab === "filters") {
+      return this.setState({
+        callbackVisible: false,
+        parametersVisible: false,
+        filtersVisible: true
       });
     } else if (tab === "callbacks") {
       return this.setState({
         callbackVisible: true,
-        parametersVisible: false
+        parametersVisible: false,
+        filtersVisible: false
       });
     }
   };
+
+  renderFilters() {
+    if (this.state.filtersVisible) {
+      let filtersId = `${this.props.pathMethod[0]}${
+        this.props.pathMethod[1]
+      }Filters`;
+
+      let filtersElement = document.getElementById(filtersId);
+      let filters = filtersElement
+        ? JSON.parse(filtersElement.getAttribute("data-filters"))
+        : false;
+
+      return (
+        <div className="parameters-container">
+          {!filters ? (
+            <div className="opblock-description-wrapper">
+              <p>No Filters</p>
+            </div>
+          ) : (
+            <div className="table-container">
+              {filters.map(filter => {
+                return <div>{filter.name}</div>;
+              })}
+            </div>
+          )}
+        </div>
+      );
+    }
+  }
 
   render() {
     let {
@@ -125,6 +163,8 @@ class Parameters extends Component {
       i++;
     });
 
+    console.log(this.props);
+
     let paramsJsx = pairedParams.map(p => {
       let paramsInnerJsx = p.map(par => {
         return (
@@ -158,6 +198,14 @@ class Parameters extends Component {
             >
               <h4 className="opblock-title">
                 <span>Parameters</span>
+              </h4>
+            </div>
+            <div
+              onClick={() => this.toggleTab("filters")}
+              className={`tab-item ${this.state.filtersVisible && "active"}`}
+            >
+              <h4 className="opblock-title">
+                <span>Filters</span>
               </h4>
             </div>
             {operation.get("callbacks") ? (
@@ -199,6 +247,8 @@ class Parameters extends Component {
         ) : (
           ""
         )}
+
+        {this.renderFilters()}
 
         {this.state.callbackVisible ? (
           <div className="callbacks-container opblock-description-wrapper">

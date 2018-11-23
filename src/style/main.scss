@@ -1,21 +1,39 @@
-.swagger-ui
-{
-    @import '~tachyons-sass/tachyons.scss';
-    @import 'mixins';
-    @import 'variables';
-    @import 'colors';
-    @import 'type';
-    @import 'layout';
-    @import 'buttons';
-    @import 'form';
-    @import 'modal';
-    @import 'models';
-    @import 'servers';
-    @import 'table';
-    @import 'topbar';
-    @import 'information';
-    @import 'authorize';
-    @import 'errors';
-    @include text_body();
-    @import 'split-pane-mode';
+.swagger-ui {
+  @import "~tachyons-sass/tachyons.scss";
+  @import "mixins";
+  @import "variables";
+  @import "colors";
+  @import "type";
+  @import "layout";
+  @import "buttons";
+  @import "form";
+  @import "modal";
+  @import "models";
+  @import "servers";
+  @import "table";
+  @import "topbar";
+  @import "information";
+  @import "authorize";
+  @import "errors";
+  @include text_body();
+  @import "split-pane-mode";
+}
+
+.table_row {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.param_row {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.col_name {
+  width: 50% !important;
+}
+
+.col_description {
+  width: 50% !important;
 }

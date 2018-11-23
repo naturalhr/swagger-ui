@@ -123,18 +123,12 @@ export default class Topbar extends React.Component {
         </label>
       )
     }
-    else {
-      formOnSubmit = this.downloadUrl
-      control.push(<input className="download-url-input" type="text" onChange={ this.onUrlChange } value={this.state.url} disabled={isLoading} style={inputStyle} />)
-      control.push(<Button className="download-url-button" onClick={ this.downloadUrl }>Explore</Button>)
-    }
 
     return (
       <div className="topbar">
         <div className="wrapper">
           <div className="topbar-wrapper">
             <Link>
-              <img height="30" width="30" src={ Logo } alt="Swagger UI"/>
               <span>Natural HR</span>
             </Link>
             <form className="download-url-wrapper" onSubmit={formOnSubmit}>

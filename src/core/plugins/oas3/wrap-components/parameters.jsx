@@ -164,7 +164,7 @@ class Parameters extends Component {
     });
 
     let paramsJsx = pairedParams.map(p => {
-      let paramsInnerJsx = p.map(par => {
+      let paramsInnerJsx = p.map((par, arrKey) => {
         return (
           <ParameterRow
             fn={fn}
@@ -180,6 +180,7 @@ class Parameters extends Component {
             specActions={specActions}
             pathMethod={pathMethod}
             isExecute={isExecute}
+            arrKey={arrKey}
           />
         );
       });

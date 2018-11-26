@@ -220,8 +220,10 @@ export default class ParameterRow extends Component {
       }
     }
 
+    let classname = this.props.arrKey == 0 ? "" : "param_row--right";
+
     return (
-      <div className="col-6 param_row">
+      <div className={`col-6 param_row ${classname}`}>
         <td className="col parameters-col_name col_name">
           <div
             className={

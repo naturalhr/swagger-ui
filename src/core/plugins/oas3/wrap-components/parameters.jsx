@@ -163,8 +163,6 @@ class Parameters extends Component {
       i++;
     });
 
-    console.log(this.props);
-
     let paramsJsx = pairedParams.map(p => {
       let paramsInnerJsx = p.map(par => {
         return (

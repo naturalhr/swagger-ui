@@ -112,7 +112,6 @@ export default class BaseLayout extends React.Component {
     // data to be sent in the curl request
     $data = array(
         "id" => 24,
-        "company_id" => 5,
         "employee_id" => 3,
         "manager_id" => 1,
         "emp_fname" => "Luke",

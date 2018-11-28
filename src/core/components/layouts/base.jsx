@@ -24,28 +24,190 @@ export default class BaseLayout extends React.Component {
     this.handleNavBarItemClick = this.handleNavBarItemClick.bind(this);
 
     this.getCodephp =
-    `<?php
-        echo 'test';
-     ?>`;
-    this.getCodejs = `this.pls`;
+`<?php
+    // initialise curl and set it to a variable
+    $curl = curl_init();
+
+    // set the curl URL
+    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/employee/{employee_id});
+
+    // set the curl headers
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'api_key: 111111111111111111111',
+        'Content-Type: application/json',
+    ));
+
+    // if the curl request fails then it will return FALSE, however it will not return TRUE on success
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+    // set the authentication method
+    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    // execute the curl request
+    $result = curl_exec($curl);
+
+    // if the curl request fails then die with a message
+    if(!$result) {
+        die("Connection Failure");
+    }
+
+    // close the curl instance
+    curl_close($curl);
+
+    // return the result
+    return $result;
+?>`
+    this.getCodejs = `this.doItLater`;
 
     this.putCodephp =
-    `<?php
-        echo 'test';
-     ?>`;
-    this.putCodejs = `this.pls`;
+`<?php
+    // data to be sent in the curl request
+    $data = array(
+        "comments" => "Update the timeoff comments"
+    );
+
+    // initialise curl and set it to a variable
+    $curl = curl_init();
+
+    // set the curl method to PUT
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+
+    // set the curl data
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+    // set the curl URL
+    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/timeoff/{timeoff_id}/update);
+
+    // set the curl headers
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'api_key: 111111111111111111111',
+        'Content-Type: application/json',
+    ));
+
+    // if the curl request fails then it will return FALSE, however it will not return TRUE on success
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+    // set the authentication method
+    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    // execute the curl request
+    $result = curl_exec($curl);
+
+    // if the curl request fails then die with a message
+    if(!$result) {
+        die("Connection Failure");
+    }
+
+    // close the curl instance
+    curl_close($curl);
+
+    // return the result
+    return $result;
+?>`
+
+    this.putCodejs = `this.doItLater`;
 
     this.postCodephp =
-    `<?php
-        echo 'test';
-     ?>`;
-    this.postCodejs = `this.pls`;
+`<?php
+    // data to be sent in the curl request
+    $data = array(
+        "id" => 24,
+        "company_id" => 5,
+        "employee_id" => 3,
+        "manager_id" => 1,
+        "emp_fname" => "Luke",
+        "emp_lname" => "Skywalker",
+        "time_off_type" => "???",
+        "time_off_type_id" => "???",
+        "start_date" => "2018-10-05",
+        "end_date" => "2018-10-08",
+        "days" => 2.5,
+        "balance" => "12.5",
+        "datestamp" => "2018-10-01",
+        "comments" => "time off for a short holiday",
+        "approved" => "??? is this 1 or 0 ?"
+        "mgr_comments" => "Going on a trip away to Prague",
+        "rtw" => "???"
+    );
+
+    // initialise curl and set it to a variable
+    $curl = curl_init();
+
+    // set the curl method to POST
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+
+    // set the curl data
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+    // set the curl URL
+    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/timeoff);
+
+    // set the curl headers
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'api_key: 111111111111111111111',
+        'Content-Type: application/json',
+    ));
+
+    // if the curl request fails then it will return FALSE, however it will not return TRUE on success
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+    // set the authentication method
+    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    // execute the curl request
+    $result = curl_exec($curl);
+
+    // if the curl request fails then die with a message
+    if(!$result) {
+        die("Connection Failure");
+    }
+
+    // close the curl instance
+    curl_close($curl);
+
+    // return the result
+    return $result;
+?>`
+    this.postCodejs = `this.doItLater`;
 
     this.deleteCodephp =
-    `<?php
-        echo 'test';
-     ?>`;
-    this.deleteCodejs = `this.pls`;
+`<?php
+    // initialise curl and set it to a variable
+    $curl = curl_init();
+
+    // set the curl method to POST
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+
+    // set the curl URL
+    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/timeoff/{timeoff_id}/delete);
+
+    // set the curl headers
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'api_key: 111111111111111111111',
+        'Content-Type: application/json',
+    ));
+
+    // if the curl request fails then it will return FALSE, however it will not return TRUE on success
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+    // set the authentication method
+    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    // execute the curl request
+    $result = curl_exec($curl);
+
+    // if the curl request fails then die with a message
+    if(!$result) {
+        die("Connection Failure");
+    }
+
+    // close the curl instance
+    curl_close($curl);
+
+    // return the result
+    return $result;
+?>`
+    this.deleteCodejs = `this.doItLater`;
   }
 
   static propTypes = {
@@ -148,14 +310,6 @@ export default class BaseLayout extends React.Component {
               >
                 Php
               </div>
-              <div
-                className={routeItemJsClasses}
-                onClick={() => {
-                  this.handleNavBarItemClick(method, "js");
-                }}
-              >
-                JavaScript
-              </div>
             </div>
             <SyntaxHighlighter
               language={
@@ -172,6 +326,15 @@ export default class BaseLayout extends React.Component {
       </div>
     );
   }
+
+  // <div
+  //   className={routeItemJsClasses}
+  //   onClick={() => {
+  //     this.handleNavBarItemClick(method, "js");
+  //   }}
+  // >
+  //   JavaScript
+  // </div>
 
   render() {
     let { specSelectors, getComponent } = this.props;

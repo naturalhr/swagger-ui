@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/styles/prism";
-import { php } from "react-syntax-highlighter/languages/prism";
+import { php, js } from "react-syntax-highlighter/languages/prism";
 import classNames from "classnames";
 
 export default class BaseLayout extends React.Component {
@@ -22,6 +22,30 @@ export default class BaseLayout extends React.Component {
     this.toggleExamples = this.toggleExamples.bind(this);
     this.toggleExampleRoute = this.toggleExampleRoute.bind(this);
     this.handleNavBarItemClick = this.handleNavBarItemClick.bind(this);
+
+    this.getCodephp =
+    `<?php
+        echo 'test';
+     ?>`;
+    this.getCodejs = `this.pls`;
+
+    this.putCodephp =
+    `<?php
+        echo 'test';
+     ?>`;
+    this.putCodejs = `this.pls`;
+
+    this.postCodephp =
+    `<?php
+        echo 'test';
+     ?>`;
+    this.postCodejs = `this.pls`;
+
+    this.deleteCodephp =
+    `<?php
+        echo 'test';
+     ?>`;
+    this.deleteCodejs = `this.pls`;
   }
 
   static propTypes = {
@@ -134,14 +158,14 @@ export default class BaseLayout extends React.Component {
               </div>
             </div>
             <SyntaxHighlighter
-              language={php}
+              language={
+                this.state[`${method}ExampleLanguage`] == "php" ? php : js
+              }
               style={darcula}
               showLineNumbers
               wrapLines
             >
-              {`<?php echo 'test';
-                    echo 'test2';
-                ?>`}
+              {this[`${method}Code${this.state[`${method}ExampleLanguage`]}`]}
             </SyntaxHighlighter>
           </div>
         )}

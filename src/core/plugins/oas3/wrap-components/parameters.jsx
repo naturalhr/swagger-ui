@@ -99,19 +99,61 @@ class Parameters extends Component {
         ? JSON.parse(filtersElement.getAttribute("data-filters"))
         : false;
 
-      return (
-        <div className="parameters-container">
-          {!filters ? (
+      if (!filters) {
+        return (
+          <div className="parameters-container">
             <div className="opblock-description-wrapper">
               <p>No Filters</p>
             </div>
-          ) : (
-            <div className="table-container">
-              {filters.map(filter => {
-                return <div>{filter.name}</div>;
-              })}
+          </div>
+        );
+      }
+
+      let filtersInFour = [];
+
+      let lastKey = 0;
+      filters.forEach((filter, key) => {
+        if (!filtersInFour[lastKey]) filtersInFour[lastKey] = [];
+        filtersInFour[lastKey].push(filter);
+        if ((key + 1) % 4 === 0) {
+          lastKey = 0;
+        } else {
+          lastKey++;
+        }
+      });
+
+      let filtersJsx = filtersInFour.map(filterCol => {
+        let filterColInner = filterCol.map(filter => {
+          return (
+            <div className="filter">
+              <div
+                className={`filter_name${filter.name ? "" : " filter_error"}`}
+              >
+                {filter.name ? filter.name : "error"}
+              </div>
+              <div
+                className={`filter_type${filter.type ? "" : " filter_error"}`}
+              >
+                {filter.type ? filter.type : "error"}
+              </div>
+              <div
+                className={`filter_format${
+                  filter.format ? "" : " filter_error"
+                }`}
+              >
+                {filter.format ? filter.format : "error"}
+              </div>
             </div>
-          )}
+          );
+        });
+        return <div className="filter_column">{filterColInner}</div>;
+      });
+
+      return (
+        <div className="parameters-container">
+          <div className="table-container">
+            <div className="filters">{filtersJsx}</div>
+          </div>
         </div>
       );
     }
@@ -153,7 +195,7 @@ class Parameters extends Component {
 
     let i = 0;
     let lastKey = 0;
-    parameters.forEach(parameter => {
+    parameters.map(parameter => {
       if (i % 2 === 0) {
         pairedParams.push([parameter]);
         if (pairedParams.length > 1) lastKey++;
@@ -169,7 +211,7 @@ class Parameters extends Component {
           <ParameterRow
             fn={fn}
             getComponent={getComponent}
-            specPath={specPath.push(i)}
+            specPath={specPath.push(arrKey)}
             getConfigs={getConfigs}
             rawParam={par}
             param={specSelectors.parameterWithMetaByIdentity(pathMethod, par)}

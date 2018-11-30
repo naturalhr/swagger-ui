@@ -231,24 +231,12 @@
     max-width: 90px;
   }
 
-  &_type {
+  &_info {
     font-size: 12px;
     font-weight: 600;
     font-family: monospace;
     padding: 5px 0;
     max-width: 90px;
-  }
-
-  &_format {
-    font-size: 12px;
-    font-weight: 600;
-    font-family: monospace;
-    padding: 5px 0;
-    max-width: 90px;
-  }
-
-  &_error {
-    color: red;
   }
 
   @media only screen and (min-width: 1020px) {
@@ -256,11 +244,7 @@
       max-width: none;
     }
 
-    &_type {
-      max-width: none;
-    }
-
-    &_format {
+    &_info {
       max-width: none;
     }
   }

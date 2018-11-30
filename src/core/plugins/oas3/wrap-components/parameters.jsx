@@ -124,27 +124,14 @@ class Parameters extends Component {
 
       let filtersJsx = filtersInFour.map(filterCol => {
         let filterColInner = filterCol.map(filter => {
-          return (
-            <div className="filter">
-              <div
-                className={`filter_name${filter.name ? "" : " filter_error"}`}
-              >
-                {filter.name ? filter.name : "error"}
+          let filterInfoJsx = Object.keys(filter).map(key => {
+            return (
+              <div className={key == "name" ? "filter_name" : "filter_info"}>
+                {filter[key]}
               </div>
-              <div
-                className={`filter_type${filter.type ? "" : " filter_error"}`}
-              >
-                {filter.type ? filter.type : "error"}
-              </div>
-              <div
-                className={`filter_format${
-                  filter.format ? "" : " filter_error"
-                }`}
-              >
-                {filter.format ? filter.format : "error"}
-              </div>
-            </div>
-          );
+            );
+          });
+          return <div className="filter">{filterInfoJsx}</div>;
         });
         return <div className="filter_column">{filterColInner}</div>;
       });

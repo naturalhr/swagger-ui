@@ -46,6 +46,7 @@
     "start": "npm-run-all --parallel serve-static open-static"
   },
   "dependencies": {
+    "@babel/runtime": "^7.1.5",
     "@braintree/sanitize-url": "^2.0.2",
     "@kyleshockey/js-yaml": "^1.0.1",
     "@kyleshockey/object-assign-deep": "^0.4.2",

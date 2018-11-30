@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { darcula } from "react-syntax-highlighter/styles/prism";
-import { php, js } from "react-syntax-highlighter/languages/prism";
 import classNames from "classnames";
 
 export default class BaseLayout extends React.Component {
@@ -311,9 +310,7 @@ export default class BaseLayout extends React.Component {
               </div>
             </div>
             <SyntaxHighlighter
-              language={
-                this.state[`${method}ExampleLanguage`] == "php" ? php : js
-              }
+              language="php"
               style={darcula}
               showLineNumbers
               wrapLines

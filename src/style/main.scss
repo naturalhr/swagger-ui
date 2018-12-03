@@ -210,7 +210,6 @@
 .filters {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .filter {
@@ -222,6 +221,7 @@
   &_column {
     display: flex;
     flex-direction: column;
+    width: 25%;
   }
 
   &_name {

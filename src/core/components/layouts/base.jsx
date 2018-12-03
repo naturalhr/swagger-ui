@@ -4,6 +4,9 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/styles/prism";
 import classNames from "classnames";
 
+import Expand from "./expand.svg";
+import Retract from "./retract.svg";
+
 export default class BaseLayout extends React.Component {
   constructor() {
     super();
@@ -18,6 +21,10 @@ export default class BaseLayout extends React.Component {
       putExampleLanguage: "php",
       postExampleLanguage: "php",
       deleteExampleLanguage: "php",
+      getExampleCodeExpanded: false,
+      putExampleCodeExpanded: false,
+      postExampleCodeExpanded: false,
+      deleteExampleCodeExpanded: false,
       activeInfoTab: "codeExamples"
     };
     this.toggleExamples = this.toggleExamples.bind(this);
@@ -25,6 +32,7 @@ export default class BaseLayout extends React.Component {
     this.toggleExampleRoute = this.toggleExampleRoute.bind(this);
     this.handleNavBarItemClick = this.handleNavBarItemClick.bind(this);
     this.handleInfoNavBarItemClick = this.handleInfoNavBarItemClick.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
 
     this.getCodephp =
 `<?php
@@ -245,6 +253,12 @@ this.deleteCodejs = `this.doItLater`;
     });
   }
 
+  handleExpandClick(method) {
+      this.setState({
+          [`${method}ExampleCodeExpanded`]: !this.state[`${method}ExampleCodeExpanded`]
+      })
+  }
+
   renderCodeExamples() {
     let arrow = this.state.examplesOpen ? "#large-arrow-down" : "#large-arrow";
     return (
@@ -290,6 +304,12 @@ this.deleteCodejs = `this.doItLater`;
         this.state[`${method}ExampleLanguage`] == "js"
     });
 
+
+    let codeWrapperClasses = classNames({
+        code_wrapper: true,
+        ["code_wrapper--retracted"]: this.state[`${method}ExampleCodeExpanded`] === false,
+    });
+
     return (
       <div className="route">
         <div
@@ -318,15 +338,22 @@ this.deleteCodejs = `this.doItLater`;
               >
                 Php
               </div>
+              <img
+                className="toggle_expand"
+                src={this.state[`${method}ExampleCodeExpanded`] === false ? Expand : Retract}
+                onClick={() => {this.handleExpandClick(method)}}
+              />
             </div>
-            <SyntaxHighlighter
-              language="php"
-              style={darcula}
-              showLineNumbers
-              wrapLines
-            >
-              {this[`${method}Code${this.state[`${method}ExampleLanguage`]}`]}
-            </SyntaxHighlighter>
+            <div className={codeWrapperClasses}>
+                <SyntaxHighlighter
+                  language="php"
+                  style={darcula}
+                  showLineNumbers
+                  wrapLines
+                >
+                  {this[`${method}Code${this.state[`${method}ExampleLanguage`]}`]}
+                </SyntaxHighlighter>
+            </div>
           </div>
         )}
       </div>
@@ -409,10 +436,15 @@ this.deleteCodejs = `this.doItLater`;
 
             <div className="info_header">Pagination</div>
             <div className="info_section">
-              Two parameters are available: limit and page. limit will determine
+              Two parameters are available: limit and page. <br /> limit will determine
               the number of records per page and page will determine the current
-              page. /employee?limit=10&page=3 Will return employees number
-              30-40.
+              page. <br />
+              <SyntaxHighlighter
+                language="php"
+                style={darcula}
+                wrapLines>/employee?limit=10&page=3
+              </SyntaxHighlighter>
+              Will return employees number 30-40.
             </div>
 
             <div className="info_header">Sorting</div>

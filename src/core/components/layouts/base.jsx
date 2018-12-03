@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/styles/prism";
 import classNames from "classnames";
 
@@ -8,7 +8,8 @@ export default class BaseLayout extends React.Component {
   constructor() {
     super();
     this.state = {
-      examplesOpen: false,
+      examplesOpen: true,
+      filtersOpen: true,
       getExampleOpen: false,
       putExampleOpen: false,
       postExampleOpen: false,
@@ -16,11 +17,14 @@ export default class BaseLayout extends React.Component {
       getExampleLanguage: "php",
       putExampleLanguage: "php",
       postExampleLanguage: "php",
-      deleteExampleLanguage: "php"
+      deleteExampleLanguage: "php",
+      activeInfoTab: "codeExamples"
     };
     this.toggleExamples = this.toggleExamples.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
     this.toggleExampleRoute = this.toggleExampleRoute.bind(this);
     this.handleNavBarItemClick = this.handleNavBarItemClick.bind(this);
+    this.handleInfoNavBarItemClick = this.handleInfoNavBarItemClick.bind(this);
 
     this.getCodephp =
 `<?php
@@ -56,9 +60,9 @@ export default class BaseLayout extends React.Component {
     // return the result
     return $result;
 ?>`
-    this.getCodejs = `this.doItLater`;
+this.getCodejs = `this.doItLater`;
 
-    this.putCodephp =
+this.putCodephp =
 `<?php
     // data to be sent in the curl request
     $data = array(
@@ -104,9 +108,9 @@ export default class BaseLayout extends React.Component {
     return $result;
 ?>`
 
-    this.putCodejs = `this.doItLater`;
+this.putCodejs = `this.doItLater`;
 
-    this.postCodephp =
+this.postCodephp =
 `<?php
     // data to be sent in the curl request
     $data = array(
@@ -166,9 +170,9 @@ export default class BaseLayout extends React.Component {
     // return the result
     return $result;
 ?>`
-    this.postCodejs = `this.doItLater`;
+this.postCodejs = `this.doItLater`;
 
-    this.deleteCodephp =
+this.deleteCodephp =
 `<?php
     // initialise curl and set it to a variable
     $curl = curl_init();
@@ -205,7 +209,7 @@ export default class BaseLayout extends React.Component {
     // return the result
     return $result;
 ?>`
-    this.deleteCodejs = `this.doItLater`;
+this.deleteCodejs = `this.doItLater`;
   }
 
   static propTypes = {
@@ -223,6 +227,12 @@ export default class BaseLayout extends React.Component {
     });
   }
 
+  toggleFilters() {
+    this.setState({
+      filtersOpen: !this.state.filtersOpen
+    });
+  }
+
   toggleExampleRoute(method) {
     this.setState({
       [`${method}ExampleOpen`]: !this.state[`${method}ExampleOpen`]
@@ -235,7 +245,7 @@ export default class BaseLayout extends React.Component {
     });
   }
 
-  renderExamples() {
+  renderCodeExamples() {
     let arrow = this.state.examplesOpen ? "#large-arrow-down" : "#large-arrow";
     return (
       <div
@@ -332,6 +342,169 @@ export default class BaseLayout extends React.Component {
   //   JavaScript
   // </div>
 
+  handleInfoNavBarItemClick(tab) {
+    this.setState({
+      activeInfoTab: tab
+    });
+  }
+
+  renderFiltersInfo() {
+    let arrow = this.state.filtersOpen ? "#large-arrow-down" : "#large-arrow";
+    return (
+      <div
+        className={`route_block${
+          this.state.filtersOpen ? " route_block--open" : ""
+        }`}
+      >
+        <h4 className="route_block_header" onClick={this.toggleFilters}>
+          <div>Filters</div>
+          <svg class="arrow" width="20" height="20">
+            <use href={arrow} href={arrow} />
+          </svg>
+        </h4>
+        {this.state.filtersOpen && (
+          <div className="filters_body">
+            <div className="info_header">Available query parameters</div>
+            <div className="info_section">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Includes</td>
+                    <td>array</td>
+                    <td>
+                      Array of related resources to load, e.g. ['employee',
+                      'timeoff']
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sort</td>
+                    <td>array</td>
+                    <td>Property to sort by, e.g. 'title'</td>
+                  </tr>
+                  <tr>
+                    <td>Limit</td>
+                    <td>integer </td>
+                    <td>Limit of resources to return</td>
+                  </tr>
+                  <tr>
+                    <td>Page</td>
+                    <td>integer </td>
+                    <td>For use with limit</td>
+                  </tr>
+                  <tr>
+                    <td>Filter_groups</td>
+                    <td>array</td>
+                    <td>Array of filter groups. See below for syntax.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="info_header">Pagination</div>
+            <div className="info_section">
+              Two parameters are available: limit and page. limit will determine
+              the number of records per page and page will determine the current
+              page. /employee?limit=10&page=3 Will return employees number
+              30-40.
+            </div>
+
+            <div className="info_header">Sorting</div>
+            <div className="info_section">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Value Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>key</td>
+                    <td>string</td>
+                    <td>The property of the model to sort by</td>
+                  </tr>
+                  <tr>
+                    <td>direction</td>
+                    <td>ASC or DESC</td>
+                    <td>Which direction to sort the property by</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="info_subheader">Example</div>
+            <div className="info_section">
+                <SyntaxHighlighter
+                  language="php"
+                  style={darcula}
+                  wrapLines
+                >
+{`[
+    {
+        "key": "title",
+        "direction": "ASC"
+    }, {
+        "key": "year",
+        "direction": "DESC"
+    }
+]`}
+                </SyntaxHighlighter>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  renderInfoBody() {
+    let jsx = [];
+    switch (this.state.activeInfoTab) {
+      case "filters":
+        jsx = this.renderFiltersInfo();
+        break;
+      default:
+        jsx = this.renderCodeExamples();
+    }
+    return <div className="info_body">{jsx}</div>;
+  }
+
+  renderInfo() {
+    return (
+      <div className="info">
+        <div className="info_nav">
+          <div
+            className={`info_nav_item${
+              this.state.activeInfoTab == "codeExamples"
+                ? " info_nav_item--active"
+                : ""
+            }`}
+            onClick={() => this.handleInfoNavBarItemClick("codeExamples")}
+          >
+            Code Examples
+          </div>
+          <div
+            className={`info_nav_item${
+              this.state.activeInfoTab == "filters"
+                ? " info_nav_item--active"
+                : ""
+            }`}
+            onClick={() => this.handleInfoNavBarItemClick("filters")}
+          >
+            Filters
+          </div>
+        </div>
+        {this.renderInfoBody()}
+      </div>
+    );
+  }
+
   render() {
     let { specSelectors, getComponent } = this.props;
 
@@ -389,7 +562,7 @@ export default class BaseLayout extends React.Component {
             <Col mobile={12}>
               <InfoContainer />
             </Col>
-            <Col mobile={12}>{this.renderExamples()}</Col>
+            <Col mobile={12}>{this.renderInfo()}</Col>
           </Row>
           {hasServers || hasSchemes || hasSecurityDefinitions ? (
             <div className="scheme-container">

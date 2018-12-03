@@ -436,17 +436,17 @@ this.deleteCodejs = `this.doItLater`;
 
             <div className="info_header">Pagination</div>
             <div className="info_section">
-              Two parameters are available: limit and page. <br /> limit will determine
+              Two parameters are available: limit and page. <br /> Limit will determine
               the number of records per page and page will determine the current
-              page. <br />
+              page. <br /><br />
               <SyntaxHighlighter
                 language="php"
                 style={darcula}
                 wrapLines>/employee?limit=10&page=3
               </SyntaxHighlighter>
+              <br />
               Will return employees number 30-40.
             </div>
-
             <div className="info_header">Sorting</div>
             <div className="info_section">
               <table>
@@ -470,24 +470,154 @@ this.deleteCodejs = `this.doItLater`;
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div className="info_subheader">Example</div>
-            <div className="info_section">
-                <SyntaxHighlighter
+              <div className="info_subheader">Example</div>
+              <SyntaxHighlighter
                   language="php"
                   style={darcula}
                   wrapLines
-                >
+              >
 {`[
     {
-        "key": "title",
-        "direction": "ASC"
-    }, {
-        "key": "year",
-        "direction": "DESC"
+      "key": "title",
+      "direction": "ASC"
+    },
+    {
+      "key": "year",
+      "direction": "DESC"
     }
-]`}
-                </SyntaxHighlighter>
+  ]`}
+              </SyntaxHighlighter>
+              <br />
+              Will result in the books being sorted by title in ascending order and then year in descending order.
+            </div>
+            <div className="info_header">Filters</div>
+            <div className="info_section">
+              Should be defined as an array of filter groups.
+
+              <div className="info_subheader">Filter Groups</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Value type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>or</td>
+                    <td>boolean</td>
+                    <td>
+                      Should the filters in this group be grouped by logical OR or AND operator
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>filters</td>
+                    <td>array</td>
+                    <td>Array of filters (see syntax below)</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="info_subheader">Filters</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Value type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>key</td>
+                    <td>string</td>
+                    <td>
+                      The property of the model to filter by (can also be custom filter)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>value</td>
+                    <td>mixed</td>
+                    <td>The value to search for</td>
+                  </tr>
+                  <tr>
+                    <td>operator</td>
+                    <td>string</td>
+                    <td>The filter operator to use (see different types below)</td>
+                  </tr>
+                  <tr>
+                    <td>not</td>
+                    <td>boolean</td>
+                    <td>Negate the filter</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="info_subheader">Operators</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ct</td>
+                    <td>String contains</td>
+                    <td>
+                      ior matches Giordano Bruno and Giovanni
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>sw</td>
+                    <td>Starts with</td>
+                    <td>Gior matches Giordano Bruno but not Giovanni</td>
+                  </tr>
+                  <tr>
+                    <td>ew</td>
+                    <td>Ends with</td>
+                    <td>uno matches Giordano Bruno but not Giovanni</td>
+                  </tr>
+                  <tr>
+                    <td>eq</td>
+                    <td>Equals</td>
+                    <td>Giordano Bruno matches Giordano Bruno but not Bruno</td>
+                  </tr>
+                  <tr>
+                    <td>gt</td>
+                    <td>Greater than</td>
+                    <td>1548 matches 1600 but not 1400</td>
+                  </tr>
+                  <tr>
+                    <td>gte</td>
+                    <td>Greater than or equalTo	</td>
+                    <td>1548 matches 1548 and above</td>
+                  </tr>
+                  <tr>
+                    <td>lte</td>
+                    <td>Lesser than or equalTo</td>
+                    <td>1600 matches 1600 and below</td>
+                  </tr>
+                  <tr>
+                    <td>lt</td>
+                    <td>Lesser than</td>
+                    <td>1600 matches 1548 but not 1700</td>
+                  </tr>
+                  <tr>
+                    <td>in</td>
+                    <td>In array</td>
+                    <td>['Giordano', 'Bruno'] matches Giordano and Bruno but not Giovanni</td>
+                  </tr>
+                  <tr>
+                    <td>bt</td>
+                    <td>Between</td>
+                    <td>[1, 10] matches 5 and 7 but not 11</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         )}

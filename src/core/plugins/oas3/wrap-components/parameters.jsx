@@ -71,19 +71,29 @@ class Parameters extends Component {
       return this.setState({
         parametersVisible: true,
         callbackVisible: false,
-        filtersVisible: false
+        filtersVisible: false,
+        sortableVisible: false,
       });
     } else if (tab === "filters") {
       return this.setState({
         callbackVisible: false,
         parametersVisible: false,
-        filtersVisible: true
+        filtersVisible: true,
+        sortableVisible: false,
+      });
+  } else if (tab === "sortable") {
+      return this.setState({
+        callbackVisible: false,
+        parametersVisible: false,
+        filtersVisible: false,
+        sortableVisible: true
       });
     } else if (tab === "callbacks") {
       return this.setState({
         callbackVisible: true,
         parametersVisible: false,
-        filtersVisible: false
+        filtersVisible: false,
+        sortableVisible: false
       });
     }
   };
@@ -144,6 +154,64 @@ class Parameters extends Component {
         </div>
       );
     }
+  }
+
+  renderData(type) {
+      if (this.state[`${type}Visible`]) {
+        let elementId = `${this.props.pathMethod[0]}${
+          this.props.pathMethod[1]
+        }Data`;
+
+        let element = document.getElementById(elementId);
+        let data = element
+          ? JSON.parse(element.getAttribute([`data-${type}`]))
+          : false;
+
+        if (!data) {
+          return (
+            <div className="parameters-container">
+              <div className="opblock-description-wrapper">
+                <p>No data to show...</p>
+              </div>
+            </div>
+          );
+        }
+
+        let dataInFour = [];
+
+        let lastKey = 0;
+        data.forEach((filter, key) => {
+          if (!dataInFour[lastKey]) dataInFour[lastKey] = [];
+          dataInFour[lastKey].push(filter);
+          if ((key + 1) % 4 === 0) {
+            lastKey = 0;
+          } else {
+            lastKey++;
+          }
+        });
+
+        let dataJsx = dataInFour.map(dataCol => {
+          let dataColInner = dataCol.map(data => {
+            let dataInfoJsx = Object.keys(data).map(key => {
+              return (
+                <div className={key == "name" ? "data_name" : "data_info"}>
+                  {data[key]}
+                </div>
+              );
+            });
+            return <div className="data">{dataInfoJsx}</div>;
+          });
+          return <div className="data_column">{dataColInner}</div>;
+        });
+
+        return (
+          <div className="parameters-container">
+            <div className="table-container">
+              <div className="data_list">{dataJsx}</div>
+            </div>
+          </div>
+        );
+      }
   }
 
   render() {
@@ -236,6 +304,14 @@ class Parameters extends Component {
                 <span>Filters</span>
               </h4>
             </div>
+            <div
+              onClick={() => this.toggleTab("sortable")}
+              className={`tab-item ${this.state.sortableVisible && "active"}`}
+            >
+              <h4 className="opblock-title">
+                <span>Sortable</span>
+              </h4>
+            </div>
             {operation.get("callbacks") ? (
               <div
                 onClick={() => this.toggleTab("callbacks")}
@@ -276,7 +352,8 @@ class Parameters extends Component {
           ""
         )}
 
-        {this.renderFilters()}
+        {this.renderData('filters')}
+        {this.renderData('sortable')}
 
         {this.state.callbackVisible ? (
           <div className="callbacks-container opblock-description-wrapper">

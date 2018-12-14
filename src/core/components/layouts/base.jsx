@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/styles/prism";
@@ -25,7 +25,7 @@ export default class BaseLayout extends React.Component {
       putExampleCodeExpanded: false,
       postExampleCodeExpanded: false,
       deleteExampleCodeExpanded: false,
-      activeInfoTab: "codeExamples"
+      activeInfoTab: "operations"
     };
     this.toggleExamples = this.toggleExamples.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
@@ -360,15 +360,6 @@ this.deleteCodejs = `this.doItLater`;
     );
   }
 
-  // <div
-  //   className={routeItemJsClasses}
-  //   onClick={() => {
-  //     this.handleNavBarItemClick(method, "js");
-  //   }}
-  // >
-  //   JavaScript
-  // </div>
-
   handleInfoNavBarItemClick(tab) {
     this.setState({
       activeInfoTab: tab
@@ -625,14 +616,37 @@ this.deleteCodejs = `this.doItLater`;
     );
   }
 
+  renderOperations() {
+      let { getComponent } = this.props;
+      let Operations = getComponent("operations", true);
+      let Row = getComponent("Row");
+      let Col = getComponent("Col");
+
+      return (
+          <Row className="information-container">
+            <Col mobile={12}>
+              <Operations />
+            </Col>
+          </Row>
+      )
+  }
+
   renderInfoBody() {
     let jsx = [];
     switch (this.state.activeInfoTab) {
+      case "codeExamples":
+        jsx = this.renderCodeExamples();
+        break;
       case "filters":
         jsx = this.renderFiltersInfo();
         break;
+      case "models":
+        let { getComponent } = this.props;
+        let Models = getComponent("Models", true);
+        jsx = <Models />;
+        break;
       default:
-        jsx = this.renderCodeExamples();
+        jsx = this.renderOperations();
     }
     return <div className="info_body">{jsx}</div>;
   }
@@ -643,6 +657,16 @@ this.deleteCodejs = `this.doItLater`;
         <div className="info_nav">
           <div
             className={`info_nav_item${
+              this.state.activeInfoTab == "operations"
+                ? " info_nav_item--active"
+                : ""
+            }`}
+            onClick={() => this.handleInfoNavBarItemClick("operations")}
+          >
+            Operations
+          </div>
+          <div
+            className={`info_nav_item${
               this.state.activeInfoTab == "codeExamples"
                 ? " info_nav_item--active"
                 : ""
@@ -650,6 +674,16 @@ this.deleteCodejs = `this.doItLater`;
             onClick={() => this.handleInfoNavBarItemClick("codeExamples")}
           >
             Code Examples
+          </div>
+          <div
+            className={`info_nav_item${
+              this.state.activeInfoTab == "models"
+                ? " info_nav_item--active"
+                : ""
+            }`}
+            onClick={() => this.handleInfoNavBarItemClick("models")}
+          >
+            Models
           </div>
           <div
             className={`info_nav_item${
@@ -673,8 +707,6 @@ this.deleteCodejs = `this.doItLater`;
     let SvgAssets = getComponent("SvgAssets");
     let InfoContainer = getComponent("InfoContainer", true);
     let VersionPragmaFilter = getComponent("VersionPragmaFilter");
-    let Operations = getComponent("operations", true);
-    let Models = getComponent("Models", true);
     let Row = getComponent("Row");
     let Col = getComponent("Col");
     let Errors = getComponent("errors", true);
@@ -710,6 +742,7 @@ this.deleteCodejs = `this.doItLater`;
     const hasServers = servers && servers.size;
     const hasSchemes = schemes && schemes.size;
     const hasSecurityDefinitions = !!specSelectors.securityDefinitions();
+    let Operations = getComponent("operations", true);
 
     return (
       <div className="swagger-ui">
@@ -724,30 +757,20 @@ this.deleteCodejs = `this.doItLater`;
             <Col mobile={12}>
               <InfoContainer />
             </Col>
+            <Col mobile={12}>
+                {hasServers || hasSchemes || hasSecurityDefinitions ? (
+                    <div className="scheme-container">
+                    <Col className="schemes wrapper" mobile={12}>
+                    {hasServers ? <ServersContainer /> : null}
+                    {hasSchemes ? <SchemesContainer /> : null}
+                    {hasSecurityDefinitions ? <AuthorizeBtnContainer /> : null}
+                    </Col>
+                    </div>
+                ) : null}
+            </Col>
             <Col mobile={12}>{this.renderInfo()}</Col>
           </Row>
-          {hasServers || hasSchemes || hasSecurityDefinitions ? (
-            <div className="scheme-container">
-              <Col className="schemes wrapper" mobile={12}>
-                {hasServers ? <ServersContainer /> : null}
-                {hasSchemes ? <SchemesContainer /> : null}
-                {hasSecurityDefinitions ? <AuthorizeBtnContainer /> : null}
-              </Col>
-            </div>
-          ) : null}
-
           <FilterContainer />
-
-          <Row>
-            <Col mobile={12} desktop={12}>
-              <Operations />
-            </Col>
-          </Row>
-          <Row>
-            <Col mobile={12} desktop={12}>
-              <Models />
-            </Col>
-          </Row>
         </VersionPragmaFilter>
       </div>
     );

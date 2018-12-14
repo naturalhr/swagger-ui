@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import Im, { Map } from "immutable"
-import PropTypes from "prop-types"
+import React, { Component, Fragment } from "react";
+import Im, { Map } from "immutable";
+import PropTypes from "prop-types";
 
 export default class Models extends Component {
   static propTypes = {
@@ -10,101 +10,145 @@ export default class Models extends Component {
     layoutSelectors: PropTypes.object,
     layoutActions: PropTypes.object,
     getConfigs: PropTypes.func.isRequired
-  }
+  };
 
   getSchemaBasePath = () => {
-    const isOAS3 = this.props.specSelectors.isOAS3()
-    return isOAS3 ? ["components", "schemas"] : ["definitions"]
-  }
+    const isOAS3 = this.props.specSelectors.isOAS3();
+    return isOAS3 ? ["components", "schemas"] : ["definitions"];
+  };
 
   getCollapsedContent = () => {
-    return " "
-  }
+    return " ";
+  };
 
   handleToggle = (name, isExpanded) => {
-    const { layoutActions } = this.props
-    layoutActions.show(["models", name], isExpanded)
-    if(isExpanded) {
-      this.props.specActions.requestResolvedSubtree([...this.getSchemaBasePath(), name])
+    const { layoutActions } = this.props;
+    layoutActions.show(["models", name], isExpanded);
+    if (isExpanded) {
+      this.props.specActions.requestResolvedSubtree([
+        ...this.getSchemaBasePath(),
+        name
+      ]);
     }
-  }
+  };
 
-  render(){
-    let { specSelectors, getComponent, layoutSelectors, layoutActions, getConfigs } = this.props
-    let definitions = specSelectors.definitions()
-    let { docExpansion, defaultModelsExpandDepth } = getConfigs()
-    if (!definitions.size || defaultModelsExpandDepth < 0) return null
+  render() {
+    let {
+      specSelectors,
+      getComponent,
+      layoutSelectors,
+      layoutActions,
+      getConfigs
+    } = this.props;
+    let definitions = specSelectors.definitions();
+    let { docExpansion, defaultModelsExpandDepth } = getConfigs();
+    if (!definitions.size || defaultModelsExpandDepth < 0) return null;
 
-    let showModels = layoutSelectors.isShown("models", defaultModelsExpandDepth > 0 && docExpansion !== "none")
-    const specPathBase = this.getSchemaBasePath()
+    let showModels = layoutSelectors.isShown(
+      "models",
+      defaultModelsExpandDepth > 0 && docExpansion !== "none"
+    );
+    const specPathBase = this.getSchemaBasePath();
 
-    const ModelWrapper = getComponent("ModelWrapper")
-    const Collapse = getComponent("Collapse")
-    const ModelCollapse = getComponent("ModelCollapse")
-    const JumpToPath = getComponent("JumpToPath")
+    const ModelWrapper = getComponent("ModelWrapper");
+    const Collapse = getComponent("Collapse");
+    const ModelCollapse = getComponent("ModelCollapse");
+    const JumpToPath = getComponent("JumpToPath");
 
-    return <section className={ showModels ? "models is-open" : "models"}>
-      <h4 onClick={() => layoutActions.show("models", !showModels)}>
-        <span>Models</span>
-        <svg width="20" height="20">
-          <use xlinkHref={showModels ? "#large-arrow-down" : "#large-arrow"} />
-        </svg>
-      </h4>
-      <Collapse isOpened={showModels}>
-        {
-          definitions.entrySeq().map(([name])=>{
+    let arrow = showModels ? "#large-arrow-down" : "#large-arrow";
 
-            const fullPath = [...specPathBase, name]
+    return (
+      <div>
+        <h4
+          className="route_block_header route_block_header--no-margin"
+          onClick={() => layoutActions.show("models", !showModels)}
+        >
+          <div>Models</div>
+          <svg class="arrow" width="20" height="20">
+            <use href={arrow} href={arrow} />
+          </svg>
+        </h4>
+        <section className={showModels ? "models is-open" : "models"}>
+          <Collapse isOpened={showModels}>
+            {definitions
+              .entrySeq()
+              .map(([name]) => {
+                const fullPath = [...specPathBase, name];
 
-            const schemaValue = specSelectors.specResolvedSubtree(fullPath)
-            const rawSchemaValue = specSelectors.specJson().getIn(fullPath)
+                const schemaValue = specSelectors.specResolvedSubtree(fullPath);
+                const rawSchemaValue = specSelectors.specJson().getIn(fullPath);
 
-            const schema = Map.isMap(schemaValue) ? schemaValue : Im.Map()
-            const rawSchema = Map.isMap(rawSchemaValue) ? rawSchemaValue : Im.Map()
-            
-            const displayName = schema.get("title") || rawSchema.get("title") || name
+                const schema = Map.isMap(schemaValue) ? schemaValue : Im.Map();
+                const rawSchema = Map.isMap(rawSchemaValue)
+                  ? rawSchemaValue
+                  : Im.Map();
 
-            if(layoutSelectors.isShown(["models", name], false) && (schema.size === 0 && rawSchema.size > 0)) {
-              // Firing an action in a container render is not great,
-              // but it works for now.
-              this.props.specActions.requestResolvedSubtree([...this.getSchemaBasePath(), name])
-            }
+                const displayName =
+                  schema.get("title") || rawSchema.get("title") || name;
 
-            const specPath = Im.List([...specPathBase, name])
+                if (
+                  layoutSelectors.isShown(["models", name], false) &&
+                  (schema.size === 0 && rawSchema.size > 0)
+                ) {
+                  // Firing an action in a container render is not great,
+                  // but it works for now.
+                  this.props.specActions.requestResolvedSubtree([
+                    ...this.getSchemaBasePath(),
+                    name
+                  ]);
+                }
 
-            const content = <ModelWrapper name={ name }
-              expandDepth={ defaultModelsExpandDepth }
-              schema={ schema || Im.Map() }
-              displayName={displayName}
-              specPath={specPath}
-              getComponent={ getComponent }
-              specSelectors={ specSelectors }
-              getConfigs = {getConfigs}
-              layoutSelectors = {layoutSelectors}
-              layoutActions = {layoutActions}/>
+                const specPath = Im.List([...specPathBase, name]);
 
-            const title = <span className="model-box">
-              <span className="model model-title">
-                {displayName}
-              </span>
-            </span>
+                const content = (
+                  <ModelWrapper
+                    name={name}
+                    expandDepth={defaultModelsExpandDepth}
+                    schema={schema || Im.Map()}
+                    displayName={displayName}
+                    specPath={specPath}
+                    getComponent={getComponent}
+                    specSelectors={specSelectors}
+                    getConfigs={getConfigs}
+                    layoutSelectors={layoutSelectors}
+                    layoutActions={layoutActions}
+                  />
+                );
 
-            return <div id={ `model-${name}` } className="model-container" key={ `models-section-${name}` }>
-              <span className="models-jump-to-path"><JumpToPath specPath={specPath} /></span>
-              <ModelCollapse
-                classes="model-box"
-                collapsedContent={this.getCollapsedContent(name)}
-                onToggle={this.handleToggle}
-                title={title}
-                displayName={displayName}
-                modelName={name}
-                hideSelfOnExpand={true}
-                expanded={defaultModelsExpandDepth > 1}
-                >{content}</ModelCollapse>
-              </div>
-          }).toArray()
-        }
-      </Collapse>
-    </section>
+                const title = (
+                  <span className="model-box">
+                    <span className="model model-title">{displayName}</span>
+                  </span>
+                );
+
+                return (
+                  <div
+                    id={`model-${name}`}
+                    className="model-container"
+                    key={`models-section-${name}`}
+                  >
+                    <span className="models-jump-to-path">
+                      <JumpToPath specPath={specPath} />
+                    </span>
+                    <ModelCollapse
+                      classes="model-box"
+                      collapsedContent={this.getCollapsedContent(name)}
+                      onToggle={this.handleToggle}
+                      title={title}
+                      displayName={displayName}
+                      modelName={name}
+                      hideSelfOnExpand={true}
+                      expanded={defaultModelsExpandDepth > 1}
+                    >
+                      {content}
+                    </ModelCollapse>
+                  </div>
+                );
+              })
+              .toArray()}
+          </Collapse>
+        </section>
+      </div>
+    );
   }
 }

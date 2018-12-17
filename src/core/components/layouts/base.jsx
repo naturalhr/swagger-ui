@@ -40,11 +40,11 @@ export default class BaseLayout extends React.Component {
     $curl = curl_init();
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/employee/{employee_id});
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/employee/{employee_id});
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-        'api_key: 111111111111111111111',
+        'Authorization: 111111111111111111111',
         'Content-Type: application/json',
     ));
 
@@ -87,11 +87,11 @@ this.putCodephp =
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/timeoff/{timeoff_id}/update);
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/timeoff/{timeoff_id}/update);
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-        'api_key: 111111111111111111111',
+        'Authorization: 111111111111111111111',
         'Content-Type: application/json',
     ));
 
@@ -150,11 +150,11 @@ this.postCodephp =
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/timeoff);
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/timeoff);
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-        'api_key: 111111111111111111111',
+        'Authorization: 111111111111111111111',
         'Content-Type: application/json',
     ));
 
@@ -189,11 +189,11 @@ this.deleteCodephp =
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, http://localhost:8090/timeoff/{timeoff_id}/delete);
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/timeoff/{timeoff_id}/delete);
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-        'api_key: 111111111111111111111',
+        'Authorization: 111111111111111111111',
         'Content-Type: application/json',
     ));
 

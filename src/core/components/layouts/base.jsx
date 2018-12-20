@@ -375,7 +375,7 @@ this.deleteCodejs = `this.doItLater`;
         }`}
       >
         <h4 className="route_block_header" onClick={this.toggleFilters}>
-          <div>Filters</div>
+          <div>How to use filters</div>
           <svg class="arrow" width="20" height="20">
             <use href={arrow} href={arrow} />
           </svg>

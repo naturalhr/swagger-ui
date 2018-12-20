@@ -693,7 +693,7 @@ this.deleteCodejs = `this.doItLater`;
             }`}
             onClick={() => this.handleInfoNavBarItemClick("filters")}
           >
-            Filters
+            How to use filters
           </div>
         </div>
         {this.renderInfoBody()}

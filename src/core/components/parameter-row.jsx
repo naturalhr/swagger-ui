@@ -220,10 +220,11 @@ export default class ParameterRow extends Component {
       }
     }
 
-    let classname = this.props.arrKey == 0 ? "" : "param_row--right";
+    // let classname = this.props.arrKey == 0 ? "" : "param_row--right";
+    // <div className={`col-6 param_row ${classname}`}>
 
     return (
-      <div className={`col-6 param_row ${classname}`}>
+      <tr data-param-name={param.get("name")} data-param-in={param.get("in")}>
         <td className="col parameters-col_name col_name">
           <div
             className={
@@ -329,7 +330,7 @@ export default class ParameterRow extends Component {
             />
           ) : null}
         </td>
-      </div>
+      </tr>
     );
   }
 }

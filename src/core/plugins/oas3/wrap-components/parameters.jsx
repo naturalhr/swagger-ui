@@ -72,16 +72,16 @@ class Parameters extends Component {
         parametersVisible: true,
         callbackVisible: false,
         filtersVisible: false,
-        sortableVisible: false,
+        sortableVisible: false
       });
     } else if (tab === "filters") {
       return this.setState({
         callbackVisible: false,
         parametersVisible: false,
         filtersVisible: true,
-        sortableVisible: false,
+        sortableVisible: false
       });
-  } else if (tab === "sortable") {
+    } else if (tab === "sortable") {
       return this.setState({
         callbackVisible: false,
         parametersVisible: false,
@@ -157,61 +157,61 @@ class Parameters extends Component {
   }
 
   renderData(type) {
-      if (this.state[`${type}Visible`]) {
-        let elementId = `${this.props.pathMethod[0]}${
-          this.props.pathMethod[1]
-        }Data`;
+    if (this.state[`${type}Visible`]) {
+      let elementId = `${this.props.pathMethod[0]}${
+        this.props.pathMethod[1]
+      }Data`;
 
-        let element = document.getElementById(elementId);
-        let data = element
-          ? JSON.parse(element.getAttribute([`data-${type}`]))
-          : false;
+      let element = document.getElementById(elementId);
+      let data = element
+        ? JSON.parse(element.getAttribute([`data-${type}`]))
+        : false;
 
-        if (!data) {
-          return (
-            <div className="parameters-container">
-              <div className="opblock-description-wrapper">
-                <p>No data to show...</p>
-              </div>
-            </div>
-          );
-        }
-
-        let dataInFour = [];
-
-        let lastKey = 0;
-        data.forEach((filter, key) => {
-          if (!dataInFour[lastKey]) dataInFour[lastKey] = [];
-          dataInFour[lastKey].push(filter);
-          if ((key + 1) % 4 === 0) {
-            lastKey = 0;
-          } else {
-            lastKey++;
-          }
-        });
-
-        let dataJsx = dataInFour.map(dataCol => {
-          let dataColInner = dataCol.map(data => {
-            let dataInfoJsx = Object.keys(data).map(key => {
-              return (
-                <div className={key == "name" ? "data_name" : "data_info"}>
-                  {data[key]}
-                </div>
-              );
-            });
-            return <div className="data">{dataInfoJsx}</div>;
-          });
-          return <div className="data_column">{dataColInner}</div>;
-        });
-
+      if (!data) {
         return (
           <div className="parameters-container">
-            <div className="table-container">
-              <div className="data_list">{dataJsx}</div>
+            <div className="opblock-description-wrapper">
+              <p>No data to show...</p>
             </div>
           </div>
         );
       }
+
+      let dataInFour = [];
+
+      let lastKey = 0;
+      data.forEach((filter, key) => {
+        if (!dataInFour[lastKey]) dataInFour[lastKey] = [];
+        dataInFour[lastKey].push(filter);
+        if ((key + 1) % 4 === 0) {
+          lastKey = 0;
+        } else {
+          lastKey++;
+        }
+      });
+
+      let dataJsx = dataInFour.map(dataCol => {
+        let dataColInner = dataCol.map(data => {
+          let dataInfoJsx = Object.keys(data).map(key => {
+            return (
+              <div className={key == "name" ? "data_name" : "data_info"}>
+                {data[key]}
+              </div>
+            );
+          });
+          return <div className="data">{dataInfoJsx}</div>;
+        });
+        return <div className="data_column">{dataColInner}</div>;
+      });
+
+      return (
+        <div className="parameters-container">
+          <div className="table-container">
+            <div className="data_list">{dataJsx}</div>
+          </div>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -246,23 +246,46 @@ class Parameters extends Component {
     const requestBody = operation.get("requestBody");
     const requestBodySpecPath = specPath.slice(0, -1).push("requestBody"); // remove the "parameters" part
 
-    let pairedParams = [];
+    // let pairedParams = [];
+    // let i = 0;
+    // let lastKey = 0;
+    // parameters.map(parameter => {
+    //   if (i % 2 === 0) {
+    //     pairedParams.push([parameter]);
+    //     if (pairedParams.length > 1) lastKey++;
+    //   } else {
+    //     pairedParams[lastKey].push(parameter);
+    //   }
+    //   i++;
+    // });
 
-    let i = 0;
-    let lastKey = 0;
-    parameters.map(parameter => {
-      if (i % 2 === 0) {
-        pairedParams.push([parameter]);
-        if (pairedParams.length > 1) lastKey++;
-      } else {
-        pairedParams[lastKey].push(parameter);
-      }
-      i++;
-    });
+    // let paramsJsx = pairedParams.map(p => {
+    //   let paramsInnerJsx = p.map((par, arrKey) => {
+    //     return (
+    //       <ParameterRow
+    //         fn={fn}
+    //         getComponent={getComponent}
+    //         specPath={specPath.push(arrKey)}
+    //         getConfigs={getConfigs}
+    //         rawParam={par}
+    //         param={specSelectors.parameterWithMetaByIdentity(pathMethod, par)}
+    //         key={par.get("name")}
+    //         onChange={this.onChange}
+    //         onChangeConsumes={this.onChangeConsumesWrapper}
+    //         specSelectors={specSelectors}
+    //         specActions={specActions}
+    //         pathMethod={pathMethod}
+    //         isExecute={isExecute}
+    //         arrKey={arrKey}
+    //       />
+    //     );
+    //   });
+    //   return <tr className="table_row">{paramsInnerJsx}</tr>;
+    // });
 
-    let paramsJsx = pairedParams.map(p => {
-      let paramsInnerJsx = p.map((par, arrKey) => {
-        return (
+    let paramsJsx = parameters.map(par => {
+      return (
+        <tr className="table_row">
           <ParameterRow
             fn={fn}
             getComponent={getComponent}
@@ -279,9 +302,8 @@ class Parameters extends Component {
             isExecute={isExecute}
             arrKey={arrKey}
           />
-        );
-      });
-      return <tr className="table_row">{paramsInnerJsx}</tr>;
+        </tr>
+      );
     });
 
     return (
@@ -352,8 +374,8 @@ class Parameters extends Component {
           ""
         )}
 
-        {this.renderData('filters')}
-        {this.renderData('sortable')}
+        {this.renderData("filters")}
+        {this.renderData("sortable")}
 
         {this.state.callbackVisible ? (
           <div className="callbacks-container opblock-description-wrapper">

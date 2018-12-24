@@ -35,25 +35,25 @@
 //   padding-left: 30px;
 // }
 
-.col_name {
-  width: 50% !important;
-  max-width: 180px;
-}
+// .col_name {
+//   width: 50% !important;
+//   max-width: 180px;
+// }
+//
+// .col_description {
+//   width: 50% !important;
+//   max-width: 180px;
+// }
 
-.col_description {
-  width: 50% !important;
-  max-width: 180px;
-}
-
-@media only screen and (min-width: 1020px) {
-  .col_name {
-    max-width: none;
-  }
-
-  .col_description {
-    max-width: none;
-  }
-}
+// @media only screen and (min-width: 1020px) {
+//   .col_name {
+//     max-width: none;
+//   }
+//
+//   .col_description {
+//     max-width: none;
+//   }
+// }
 
 .route_block_header {
   display: flex;

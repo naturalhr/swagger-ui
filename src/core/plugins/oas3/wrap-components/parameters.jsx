@@ -300,6 +300,7 @@ class Parameters extends Component {
             specActions={specActions}
             pathMethod={pathMethod}
             isExecute={isExecute}
+            arrKey={arrKey}
           />
         </tr>
       );

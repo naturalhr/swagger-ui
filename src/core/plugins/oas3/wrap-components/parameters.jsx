@@ -284,7 +284,6 @@ class Parameters extends Component {
     // });
 
     let paramsJsx = parameters.map((par, arrKey) => {
-        console.log('pla', arrKey);
       return (
         <tr className="table_row">
           <ParameterRow

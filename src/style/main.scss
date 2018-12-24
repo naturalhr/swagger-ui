@@ -19,21 +19,21 @@
   @import "split-pane-mode";
 }
 
-.table_row {
-  display: flex;
-}
-
-.param_row {
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  padding: 15px;
-}
-
-.param_row--right {
-  border-left: 2px solid #c8d1cd;
-  padding-left: 30px;
-}
+// .table_row {
+//   display: flex;
+// }
+//
+// .param_row {
+//   display: flex;
+//   justify-content: space-between;
+//   width: 50%;
+//   padding: 15px;
+// }
+//
+// .param_row--right {
+//   border-left: 2px solid #c8d1cd;
+//   padding-left: 30px;
+// }
 
 .col_name {
   width: 50% !important;
@@ -46,7 +46,7 @@
 }
 
 @media only screen and (min-width: 1020px) {
-  7 .col_name {
+  .col_name {
     max-width: none;
   }
 

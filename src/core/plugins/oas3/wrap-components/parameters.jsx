@@ -283,7 +283,7 @@ class Parameters extends Component {
     //   return <tr className="table_row">{paramsInnerJsx}</tr>;
     // });
 
-    let paramsJsx = parameters.map(par => {
+    let paramsJsx = parameters.map((par, arrKey) => {
       return (
         <tr className="table_row">
           <ParameterRow

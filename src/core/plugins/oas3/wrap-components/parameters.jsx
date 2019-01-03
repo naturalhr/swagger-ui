@@ -363,7 +363,14 @@ class Parameters extends Component {
               <div className="table-container">
                 <table className="parameters">
                   <thead>
-                    <tr />
+                    <tr>
+                      <th className="col col_header parameters-col_name">
+                        Name
+                      </th>
+                      <th className="col col_header parameters-col_description">
+                        Description
+                      </th>
+                    </tr>
                   </thead>
                   <tbody>{paramsJsx}</tbody>
                 </table>

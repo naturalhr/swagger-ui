@@ -285,24 +285,22 @@ class Parameters extends Component {
 
     let paramsJsx = parameters.map((par, arrKey) => {
       return (
-        <tr className="table_row">
-          <ParameterRow
-            fn={fn}
-            getComponent={getComponent}
-            specPath={specPath.push(arrKey)}
-            getConfigs={getConfigs}
-            rawParam={par}
-            param={specSelectors.parameterWithMetaByIdentity(pathMethod, par)}
-            key={par.get("name")}
-            onChange={this.onChange}
-            onChangeConsumes={this.onChangeConsumesWrapper}
-            specSelectors={specSelectors}
-            specActions={specActions}
-            pathMethod={pathMethod}
-            isExecute={isExecute}
-            arrKey={arrKey}
-          />
-        </tr>
+        <ParameterRow
+          fn={fn}
+          getComponent={getComponent}
+          specPath={specPath.push(arrKey)}
+          getConfigs={getConfigs}
+          rawParam={par}
+          param={specSelectors.parameterWithMetaByIdentity(pathMethod, par)}
+          key={par.get("name")}
+          onChange={this.onChange}
+          onChangeConsumes={this.onChangeConsumesWrapper}
+          specSelectors={specSelectors}
+          specActions={specActions}
+          pathMethod={pathMethod}
+          isExecute={isExecute}
+          arrKey={arrKey}
+        />
       );
     });
 

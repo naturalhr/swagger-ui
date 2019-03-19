@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { darcula } from "react-syntax-highlighter/styles/prism";
+import { darcula } from "react-syntax-highlighter/dist/styles/prism";
 import classNames from "classnames";
 
 import Expand from "./expand.svg";
@@ -637,9 +637,9 @@ this.deleteCodejs = `this.doItLater`;
       case "codeExamples":
         jsx = this.renderCodeExamples();
         break;
-      case "filters":
-        jsx = this.renderFiltersInfo();
-        break;
+      // case "filters":
+      //   jsx = this.renderFiltersInfo();
+      //   break;
       case "models":
         let { getComponent } = this.props;
         let Models = getComponent("Models", true);

@@ -685,21 +685,23 @@ this.deleteCodejs = `this.doItLater`;
           >
             Models
           </div>
-          <div
-            className={`info_nav_item${
-              this.state.activeInfoTab == "filters"
-                ? " info_nav_item--active"
-                : ""
-            }`}
-            onClick={() => this.handleInfoNavBarItemClick("filters")}
-          >
-            How to use filters
-          </div>
         </div>
         {this.renderInfoBody()}
       </div>
     );
   }
+
+
+  // <div
+  //   className={`info_nav_item${
+  //     this.state.activeInfoTab == "filters"
+  //       ? " info_nav_item--active"
+  //       : ""
+  //   }`}
+  //   onClick={() => this.handleInfoNavBarItemClick("filters")}
+  // >
+  //   How to use filters
+  // </div>
 
   render() {
     let { specSelectors, getComponent } = this.props;

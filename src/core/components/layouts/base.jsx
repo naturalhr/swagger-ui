@@ -34,8 +34,7 @@ export default class BaseLayout extends React.Component {
     this.handleInfoNavBarItemClick = this.handleInfoNavBarItemClick.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
 
-    this.getCodephp =
-`<?php
+    this.getCodephp = `<?php
     // initialise curl and set it to a variable
     $curl = curl_init();
 
@@ -45,7 +44,7 @@ export default class BaseLayout extends React.Component {
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: 111111111111111111111',
-        'Content-Type: application/json',
+        'Accept: application/json',
     ));
 
     // if the curl request fails then it will return FALSE, however it will not return TRUE on success
@@ -67,11 +66,10 @@ export default class BaseLayout extends React.Component {
 
     // return the result
     return $result;
-?>`
-this.getCodejs = `this.doItLater`;
+?>`;
+    this.getCodejs = `this.doItLater`;
 
-this.putCodephp =
-`<?php
+    this.putCodephp = `<?php
     // data to be sent in the curl request
     $data = array(
         "comments" => "Update the timeoff comments"
@@ -92,7 +90,7 @@ this.putCodephp =
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: 111111111111111111111',
-        'Content-Type: application/json',
+        'Accept: application/json',
     ));
 
     // if the curl request fails then it will return FALSE, however it will not return TRUE on success
@@ -114,12 +112,11 @@ this.putCodephp =
 
     // return the result
     return $result;
-?>`
+?>`;
 
-this.putCodejs = `this.doItLater`;
+    this.putCodejs = `this.doItLater`;
 
-this.postCodephp =
-`<?php
+    this.postCodephp = `<?php
     // data to be sent in the curl request
     $data = array(
         "id" => 24,
@@ -155,7 +152,7 @@ this.postCodephp =
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: 111111111111111111111',
-        'Content-Type: application/json',
+        'Accept: application/json',
     ));
 
     // if the curl request fails then it will return FALSE, however it will not return TRUE on success
@@ -177,11 +174,10 @@ this.postCodephp =
 
     // return the result
     return $result;
-?>`
-this.postCodejs = `this.doItLater`;
+?>`;
+    this.postCodejs = `this.doItLater`;
 
-this.deleteCodephp =
-`<?php
+    this.deleteCodephp = `<?php
     // initialise curl and set it to a variable
     $curl = curl_init();
 
@@ -194,7 +190,7 @@ this.deleteCodephp =
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: 111111111111111111111',
-        'Content-Type: application/json',
+        'Accept: application/json',
     ));
 
     // if the curl request fails then it will return FALSE, however it will not return TRUE on success
@@ -216,8 +212,8 @@ this.deleteCodephp =
 
     // return the result
     return $result;
-?>`
-this.deleteCodejs = `this.doItLater`;
+?>`;
+    this.deleteCodejs = `this.doItLater`;
   }
 
   static propTypes = {
@@ -254,9 +250,11 @@ this.deleteCodejs = `this.doItLater`;
   }
 
   handleExpandClick(method) {
-      this.setState({
-          [`${method}ExampleCodeExpanded`]: !this.state[`${method}ExampleCodeExpanded`]
-      })
+    this.setState({
+      [`${method}ExampleCodeExpanded`]: !this.state[
+        `${method}ExampleCodeExpanded`
+      ]
+    });
   }
 
   renderCodeExamples() {
@@ -265,8 +263,7 @@ this.deleteCodejs = `this.doItLater`;
       <div
         className={`route_block${
           this.state.examplesOpen ? " route_block--open" : ""
-        }`}
-      >
+        }`}>
         <h4 className="route_block_header" onClick={this.toggleExamples}>
           <div>Code Examples</div>
           <svg class="arrow" width="20" height="20">
@@ -304,10 +301,10 @@ this.deleteCodejs = `this.doItLater`;
         this.state[`${method}ExampleLanguage`] == "js"
     });
 
-
     let codeWrapperClasses = classNames({
-        code_wrapper: true,
-        ["code_wrapper--retracted"]: this.state[`${method}ExampleCodeExpanded`] === false,
+      code_wrapper: true,
+      ["code_wrapper--retracted"]:
+        this.state[`${method}ExampleCodeExpanded`] === false
     });
 
     return (
@@ -318,8 +315,7 @@ this.deleteCodejs = `this.doItLater`;
           }`}
           onClick={() => {
             this.toggleExampleRoute(method);
-          }}
-        >
+          }}>
           <div className={`route_info_method route_info_method--${method}`}>
             {method.toUpperCase()}
           </div>
@@ -334,25 +330,29 @@ this.deleteCodejs = `this.doItLater`;
                 className={routeItemPhpClasses}
                 onClick={() => {
                   this.handleNavBarItemClick(method, "php");
-                }}
-              >
+                }}>
                 Php
               </div>
               <img
                 className="toggle_expand"
-                src={this.state[`${method}ExampleCodeExpanded`] === false ? Expand : Retract}
-                onClick={() => {this.handleExpandClick(method)}}
+                src={
+                  this.state[`${method}ExampleCodeExpanded`] === false
+                    ? Expand
+                    : Retract
+                }
+                onClick={() => {
+                  this.handleExpandClick(method);
+                }}
               />
             </div>
             <div className={codeWrapperClasses}>
-                <SyntaxHighlighter
-                  language="php"
-                  style={darcula}
-                  showLineNumbers
-                  wrapLines
-                >
-                  {this[`${method}Code${this.state[`${method}ExampleLanguage`]}`]}
-                </SyntaxHighlighter>
+              <SyntaxHighlighter
+                language="php"
+                style={darcula}
+                showLineNumbers
+                wrapLines>
+                {this[`${method}Code${this.state[`${method}ExampleLanguage`]}`]}
+              </SyntaxHighlighter>
             </div>
           </div>
         )}
@@ -372,8 +372,7 @@ this.deleteCodejs = `this.doItLater`;
       <div
         className={`route_block${
           this.state.filtersOpen ? " route_block--open" : ""
-        }`}
-      >
+        }`}>
         <h4 className="route_block_header" onClick={this.toggleFilters}>
           <div>How to use filters</div>
           <svg class="arrow" width="20" height="20">
@@ -427,13 +426,12 @@ this.deleteCodejs = `this.doItLater`;
 
             <div className="info_header">Pagination</div>
             <div className="info_section">
-              Two parameters are available: limit and page. <br /> Limit will determine
-              the number of records per page and page will determine the current
-              page. <br /><br />
-              <SyntaxHighlighter
-                language="php"
-                style={darcula}
-                wrapLines>/employee?limit=10&page=3
+              Two parameters are available: limit and page. <br /> Limit will
+              determine the number of records per page and page will determine
+              the current page. <br />
+              <br />
+              <SyntaxHighlighter language="php" style={darcula} wrapLines>
+                /employee?limit=10&page=3
               </SyntaxHighlighter>
               <br />
               Will return employees number 30-40.
@@ -462,12 +460,8 @@ this.deleteCodejs = `this.doItLater`;
                 </tbody>
               </table>
               <div className="info_subheader">Example</div>
-              <SyntaxHighlighter
-                  language="php"
-                  style={darcula}
-                  wrapLines
-              >
-{`[
+              <SyntaxHighlighter language="php" style={darcula} wrapLines>
+                {`[
     {
       "key": "title",
       "direction": "ASC"
@@ -479,12 +473,12 @@ this.deleteCodejs = `this.doItLater`;
   ]`}
               </SyntaxHighlighter>
               <br />
-              Will result in the books being sorted by title in ascending order and then year in descending order.
+              Will result in the books being sorted by title in ascending order
+              and then year in descending order.
             </div>
             <div className="info_header">Filters</div>
             <div className="info_section">
               Should be defined as an array of filter groups.
-
               <div className="info_subheader">Filter Groups</div>
               <table>
                 <thead>
@@ -499,7 +493,8 @@ this.deleteCodejs = `this.doItLater`;
                     <td>or</td>
                     <td>boolean</td>
                     <td>
-                      Should the filters in this group be grouped by logical OR or AND operator
+                      Should the filters in this group be grouped by logical OR
+                      or AND operator
                     </td>
                   </tr>
                   <tr>
@@ -509,7 +504,6 @@ this.deleteCodejs = `this.doItLater`;
                   </tr>
                 </tbody>
               </table>
-
               <div className="info_subheader">Filters</div>
               <table>
                 <thead>
@@ -524,7 +518,8 @@ this.deleteCodejs = `this.doItLater`;
                     <td>key</td>
                     <td>string</td>
                     <td>
-                      The property of the model to filter by (can also be custom filter)
+                      The property of the model to filter by (can also be custom
+                      filter)
                     </td>
                   </tr>
                   <tr>
@@ -535,7 +530,9 @@ this.deleteCodejs = `this.doItLater`;
                   <tr>
                     <td>operator</td>
                     <td>string</td>
-                    <td>The filter operator to use (see different types below)</td>
+                    <td>
+                      The filter operator to use (see different types below)
+                    </td>
                   </tr>
                   <tr>
                     <td>not</td>
@@ -544,7 +541,6 @@ this.deleteCodejs = `this.doItLater`;
                   </tr>
                 </tbody>
               </table>
-
               <div className="info_subheader">Operators</div>
               <table>
                 <thead>
@@ -558,9 +554,7 @@ this.deleteCodejs = `this.doItLater`;
                   <tr>
                     <td>ct</td>
                     <td>String contains</td>
-                    <td>
-                      ior matches Giordano Bruno and Giovanni
-                    </td>
+                    <td>ior matches Giordano Bruno and Giovanni</td>
                   </tr>
                   <tr>
                     <td>sw</td>
@@ -584,7 +578,7 @@ this.deleteCodejs = `this.doItLater`;
                   </tr>
                   <tr>
                     <td>gte</td>
-                    <td>Greater than or equalTo	</td>
+                    <td>Greater than or equalTo </td>
                     <td>1548 matches 1548 and above</td>
                   </tr>
                   <tr>
@@ -600,7 +594,10 @@ this.deleteCodejs = `this.doItLater`;
                   <tr>
                     <td>in</td>
                     <td>In array</td>
-                    <td>['Giordano', 'Bruno'] matches Giordano and Bruno but not Giovanni</td>
+                    <td>
+                      ['Giordano', 'Bruno'] matches Giordano and Bruno but not
+                      Giovanni
+                    </td>
                   </tr>
                   <tr>
                     <td>bt</td>
@@ -617,18 +614,18 @@ this.deleteCodejs = `this.doItLater`;
   }
 
   renderOperations() {
-      let { getComponent } = this.props;
-      let Operations = getComponent("operations", true);
-      let Row = getComponent("Row");
-      let Col = getComponent("Col");
+    let { getComponent } = this.props;
+    let Operations = getComponent("operations", true);
+    let Row = getComponent("Row");
+    let Col = getComponent("Col");
 
-      return (
-          <Row className="information-container">
-            <Col mobile={12}>
-              <Operations />
-            </Col>
-          </Row>
-      )
+    return (
+      <Row className="information-container">
+        <Col mobile={12}>
+          <Operations />
+        </Col>
+      </Row>
+    );
   }
 
   renderInfoBody() {
@@ -661,8 +658,7 @@ this.deleteCodejs = `this.doItLater`;
                 ? " info_nav_item--active"
                 : ""
             }`}
-            onClick={() => this.handleInfoNavBarItemClick("operations")}
-          >
+            onClick={() => this.handleInfoNavBarItemClick("operations")}>
             Operations
           </div>
           <div
@@ -671,8 +667,7 @@ this.deleteCodejs = `this.doItLater`;
                 ? " info_nav_item--active"
                 : ""
             }`}
-            onClick={() => this.handleInfoNavBarItemClick("codeExamples")}
-          >
+            onClick={() => this.handleInfoNavBarItemClick("codeExamples")}>
             Code Examples
           </div>
           <div
@@ -681,8 +676,7 @@ this.deleteCodejs = `this.doItLater`;
                 ? " info_nav_item--active"
                 : ""
             }`}
-            onClick={() => this.handleInfoNavBarItemClick("models")}
-          >
+            onClick={() => this.handleInfoNavBarItemClick("models")}>
             Models
           </div>
         </div>
@@ -690,7 +684,6 @@ this.deleteCodejs = `this.doItLater`;
       </div>
     );
   }
-
 
   // <div
   //   className={`info_nav_item${
@@ -752,23 +745,22 @@ this.deleteCodejs = `this.doItLater`;
         <VersionPragmaFilter
           isSwagger2={isSwagger2}
           isOAS3={isOAS3}
-          alsoShow={<Errors />}
-        >
+          alsoShow={<Errors />}>
           <Errors />
           <Row className="information-container">
             <Col mobile={12}>
               <InfoContainer />
             </Col>
             <Col mobile={12}>
-                {hasServers || hasSchemes || hasSecurityDefinitions ? (
-                    <div className="scheme-container">
-                    <Col className="schemes wrapper" mobile={12}>
+              {hasServers || hasSchemes || hasSecurityDefinitions ? (
+                <div className="scheme-container">
+                  <Col className="schemes wrapper" mobile={12}>
                     {hasServers ? <ServersContainer /> : null}
                     {hasSchemes ? <SchemesContainer /> : null}
                     {hasSecurityDefinitions ? <AuthorizeBtnContainer /> : null}
-                    </Col>
-                    </div>
-                ) : null}
+                  </Col>
+                </div>
+              ) : null}
             </Col>
             <Col mobile={12}>{this.renderInfo()}</Col>
           </Row>

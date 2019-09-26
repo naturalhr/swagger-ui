@@ -39,7 +39,7 @@ export default class BaseLayout extends React.Component {
     $curl = curl_init();
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/employee/{employee_id});
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/v1/employee/{employee_id});
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
@@ -85,7 +85,7 @@ export default class BaseLayout extends React.Component {
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/timeoff/{timeoff_id}/update);
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/v1/employee/{employee_id}/time-off/{time_off_id});
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
@@ -147,7 +147,7 @@ export default class BaseLayout extends React.Component {
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/timeoff);
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/v1/employee/{employee_id}/timeoff);
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
@@ -185,7 +185,7 @@ export default class BaseLayout extends React.Component {
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 
     // set the curl URL
-    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/timeoff/{timeoff_id}/delete);
+    curl_setopt($curl, CURLOPT_URL, https://api02.naturalhr.net/v1/employee/{employee_id}/timeoff/{timeoff_id}/delete);
 
     // set the curl headers
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
